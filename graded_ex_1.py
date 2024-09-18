@@ -48,25 +48,30 @@ def display_products(products_list):
 def display_categories():
     for index, category in enumerate(products, start=1):
         print(f"{index}. {category}")
+    #return list(products.keys())
 
 
 def add_to_cart(cart, product, quantity):
-    cart.append((product, quantity))
+    cart.append(tuple(list(product) + [quantity],))
+    #cart.append((product, quantity))
+    #cart.append(((product, quantity),))
 
 def display_cart(cart):
     if not cart:
         print("Your cart is empty.")
     else:
-        total_cost = sum(product[1] * quantity for product, quantity in cart)
-        for product, quantity in cart:
-            print(f"{product[0]} - ${product[1]} x {quantity} = ${product[1] * quantity}")
+        total_cost = 0
+        for item in cart:
+            product, price, quantity = item 
+            total_cost += price * quantity
+            print(f"{product} - ${price} x {quantity} = ${price * quantity}")
         print(f"Total cost: ${total_cost}")
 
 def generate_receipt(name, email, cart, total_cost, address):
     print(f"Receipt for {name}, {email}")
     print("Products purchased:")
     for product, quantity in cart:
-        print(f"{product[0]} - ${product[1]} x {quantity}= ${product[1] * quantity}")
+        print(f"{product[0]} - ${product[1]} x {quantity} = ${product[1] * quantity}")
     print(f"Total cost: ${total_cost}")
     print(f"Delivery address: {address}")
     print("Your items will be delivered in 3 days. Payment will be accepted after successful delivery.")
