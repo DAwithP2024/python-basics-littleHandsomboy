@@ -34,7 +34,10 @@ products = {
 
 
 def display_sorted_products(products_list, sort_order):
-    return sorted(products_list, key=lambda x: x[1], reverse=(sort_order == 2))
+    if sort_order == "asc":
+        return sorted(products_list, key=lambda x: x[1])
+    elif sort_order == "desc":
+        return sorted(products_list, key=lambda x: x[1], reverse=True)
 
 
 def display_products(products_list):
@@ -63,7 +66,7 @@ def generate_receipt(name, email, cart, total_cost, address):
     print(f"Receipt for {name}, {email}")
     print("Products purchased:")
     for product, quantity in cart:
-        print(f"{quantity} x {product[0]} - ${product[1]} = ${product[1] * quantity}")
+        print(f"{product[0]} - ${product[1]} x {quantity}= ${product[1] * quantity}")
     print(f"Total cost: ${total_cost}")
     print(f"Delivery address: {address}")
     print("Your items will be delivered in 3 days. Payment will be accepted after successful delivery.")
@@ -113,7 +116,8 @@ def main():
                 add_to_cart(cart, product, quantity)
             elif choice == "2":
                 sorted_choose = int(input("Choose 1 for ascending, 2 for descending: "))
-                sorted_products = display_sorted_products(products[selected_category], sorted_choose)
+                sorted_products = display_sorted_products(products[selected_category], "asc" if sorted_choose == 1 else "desc")
+                #sorted_products = display_sorted_products(products[selected_category], sorted_choose)
                 print("Products sorted by price:")
                 display_products(sorted_products)
             elif choice == "3":
@@ -131,10 +135,9 @@ def main():
                 break  
             else:
                 print("Invalid option. Please choose a valid option.")
-            print("hello hello hello hello hello hello hello")    
         if leave == True:
             break
-        
+
 """ The following block makes sure that the main() function is called when the program is run. 
 It also checks that this is the module that's being run directly, and not being used as a module in some other program. 
 In that case, only the part that's needed will be executed and not the entire program """
